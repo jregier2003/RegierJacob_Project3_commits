@@ -49,3 +49,18 @@ plt.xlabel('Radius (cm)')
 plt.ylabel('Mass (g)')
 plt.legend()
 plt.show()
+
+
+initial_densities = np.logspace(-1, 6.4, 10)
+for rho_center in initial_densities:
+    solution = solve_equations(rho_center)
+    radius = solution.t * R_0
+    mass = solution.y[1] * M_0
+    #(changes the radius and mass in commit 7)
+    plt.plot(radius, mass, label=f'rho_c = {rho_center:.1e}')
+
+plt.title('Mass vs Radius for Various Central Densities')
+plt.xlabel('Radius (cm)')
+plt.ylabel('Mass (g)')
+plt.xscale('log')
+plt.yscale('log')
