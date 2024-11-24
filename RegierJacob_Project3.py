@@ -69,3 +69,10 @@ plt.xlabel('Radius (cm)')
 plt.ylabel('Mass (g)')
 plt.xscale('log')
 plt.yscale('log')
+
+
+#Chandrasekhar limit
+M_Ch = 5.836 / Mu_e**2 
+plt.axhline(y=M_Ch * 1.989e33, color='black', linestyle='--', label=f"Chandrasekhar Limit ({M_Ch:.2f} M_sun)")
+plt.legend()
+plt.show()
