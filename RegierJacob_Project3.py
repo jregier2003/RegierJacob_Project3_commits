@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.integrate import solve_ivp
 from matplotlib import pyplot as plt
+import pandas as pd
 
 Mu_e = 2
 RHO_0 = 9.74 * 10**5 * Mu_e
@@ -76,3 +77,28 @@ M_Ch = 5.836 / Mu_e**2
 plt.axhline(y=M_Ch * 1.989e33, color='black', linestyle='--', label=f"Chandrasekhar Limit ({M_Ch:.2f} M_sun)")
 plt.legend()
 plt.show()
+
+
+
+
+data = pd.read_csv('wd_mass_radius.csv')
+
+obs_mass = data['M_Msun']  
+obs_radius = data['R_Rsun']  
+obs_mass_err = data['M_unc']  
+obs_radius_err = data['R_unc']  
+
+for rho_center in initial_densities:
+    solution = solve_equations(rho_center)
+    radius_physical = solution.t * R_0 / 6.957e10  
+    mass_physical = solution.y[1] * M_0 / 1.989e33  
+    plt.plot(radius_physical, mass_physical, label=f'rho_c = {rho_center:.1e}')
+
+plt.errorbar(obs_radius, obs_mass, xerr=obs_radius_err, yerr=obs_mass_err, fmt='o', label='Observed Data')
+plt.legend()
+plt.yscale('log')
+plt.xlabel('Radius (Solar Radii)')
+plt.ylabel('Mass (Solar Masses)')
+plt.title('Observed vs Calculated Mass-Radius Relationship')
+plt.show()
+
