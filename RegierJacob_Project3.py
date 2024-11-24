@@ -80,7 +80,6 @@ plt.show()
 
 
 
-
 data = pd.read_csv('wd_mass_radius.csv')
 
 obs_mass = data['M_Msun']  
@@ -102,3 +101,28 @@ plt.ylabel('Mass (Solar Masses)')
 plt.title('Observed vs Calculated Mass-Radius Relationship')
 plt.show()
 
+
+
+rho_centers = [1e2, 1e5, 2.5e6]  
+methods = ['RK45', 'LSODA', 'Radau']
+
+for rho_center in rho_centers:
+    plt.figure()
+    boundary_condition = [rho_center, 0]
+    for method in methods:
+        solution = solve_ivp(
+            system_of_equations,
+            [0.1, 1e4],
+            boundary_condition,
+            method=method,
+            events=density_equals_zero,
+        )
+        radius_physical = solution.t * R_0
+        mass_physical = solution.y[1] * M_0
+        plt.plot(radius_physical, mass_physical, label=f'Method: {method}')
+    
+    plt.legend()
+    plt.title(f'Comparison of Methods for rho_c = {rho_center:.1e}')
+    plt.xlabel('Radius (cm)')
+    plt.ylabel('Mass (g)')
+    plt.show()
