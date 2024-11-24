@@ -23,3 +23,15 @@ def density_equals_zero(r, ystate):
 
 density_equals_zero.terminal = True
 density_equals_zero.direction = -1
+
+
+def solve_equations(rho_center):
+    boundary_condition = [rho_center, 0]
+    range_of_radius = [0.1, 1e4]
+    solution = solve_ivp(
+        system_of_equations,
+        range_of_radius,
+        boundary_condition,
+        events=density_equals_zero
+    )
+    return solution
