@@ -56,8 +56,13 @@ for rho_center in initial_densities:
     solution = solve_equations(rho_center)
     radius = solution.t * R_0
     mass = solution.y[1] * M_0
-    #(changes the radius and mass in commit 7)
-    plt.plot(radius, mass, label=f'rho_c = {rho_center:.1e}')
+
+    #Convert to physical units
+    radius_physical = solution.t * R_0
+    mass_physical = solution.y[1] * M_0
+    density_physical = solution.y[0] * RHO_0
+    plt.plot(radius_physical, mass_physical, label=f'rho_c = {rho_center:.1e}')
+
 
 plt.title('Mass vs Radius for Various Central Densities')
 plt.xlabel('Radius (cm)')
