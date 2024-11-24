@@ -35,3 +35,17 @@ def solve_equations(rho_center):
         events=density_equals_zero
     )
     return solution
+
+
+rho_center = 2.5e6
+solution = solve_equations(rho_center)
+
+radius = solution.t * R_0
+mass = solution.y[1] * M_0
+
+plt.plot(radius, mass, label=f'rho_c = {rho_center}')
+plt.title('Mass vs Radius for White Dwarfs')
+plt.xlabel('Radius (cm)')
+plt.ylabel('Mass (g)')
+plt.legend()
+plt.show()
