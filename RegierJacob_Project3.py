@@ -16,3 +16,10 @@ def system_of_equations(r, ystate):
     gamma_x = x**2 / (3 * (1 + x**2)**0.5)
     dystatedr = [-m * rho / (gamma_x * r**2), rho * r**2]
     return dystatedr
+
+def density_equals_zero(r, ystate):
+    Density_Tol = 1e-2
+    return ystate[0] - Density_Tol
+
+density_equals_zero.terminal = True
+density_equals_zero.direction = -1
